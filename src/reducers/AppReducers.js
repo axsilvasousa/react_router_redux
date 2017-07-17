@@ -18,7 +18,6 @@ export default (state = INITIAL_STATE, action) => {
             }
         
         case "itemSelecionado":        
-            console.log("Reducers",action.payload);
             return{
                 ...state, ativos:action.payload
             }

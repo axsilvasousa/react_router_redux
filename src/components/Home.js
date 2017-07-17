@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
-import {  } from '../actions/AppActions';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import '../App.css';
@@ -20,12 +18,6 @@ const styles = {
 
 class Home extends Component{
 
-    constructor(props){
-        super(props);
-       
-    }
-    
-   
     render(){
         return(
             <div>
@@ -43,8 +35,4 @@ class Home extends Component{
     }
 }
 
-const mapStateToProps = state => {     
-    return null
-}
-
-export default connect(mapStateToProps, { })(Home);
+export default Home;

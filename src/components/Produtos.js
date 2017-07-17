@@ -7,21 +7,20 @@ import {
     Subheader,
     Checkbox,
     AppBar,
-    IconButton
+    IconButton,
+    CircularProgress
 } from 'material-ui';
-import FontIcon from 'material-ui/FontIcon';
 import NavigatioBack from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import { doEmail,userFetch,itemSelected } from '../actions/AppActions';
-import { Link,Redirect  } from 'react-router-dom'
 import '../App.css';
 
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; 
 class Produtos extends Component{
 
     constructor(props){
         super(props);
         this.listaUsuarios = []
         this._itemSelected = this._itemSelected.bind(this);
-        this._navigatioBack = this._navigatioBack.bind(this);
     }
     componentWillMount() {
         this.props.userFetch();
@@ -35,7 +34,6 @@ class Produtos extends Component{
         this.listaUsuarios = nextProps.usuarios;   
     }
 
-    
     _rederList(item,i){
         return (
             <ListItem                
@@ -48,40 +46,44 @@ class Produtos extends Component{
             />  
         )
     }
-    _navigatioBack(){
-        this.props.history.goBack();
-    }
-
    
     render(){
         return(
-            <div>
-                 <AppBar
-                    onLeftIconButtonTouchTap = {() => this._navigatioBack()}
-                    iconElementLeft={                        
-                        <IconButton>
-                            <NavigatioBack/>
-                        </IconButton>
-                    }
-                    title="Pedidos"
-                />
-                <List>
-                    <Subheader>Hangout Notifications</Subheader>
+            <div>                 
+                <ReactCSSTransitionGroup
+                    transitionName="fadeIn"
+                    transitionAppear={true}
+                    transitionAppearTimeout={500}
+                    transitionEnter={false}
+                    transitionLeave={false}>
+                   <AppBar
+                        onLeftIconButtonTouchTap = {() => this.props.history.goBack() }
+                        iconElementLeft={                        
+                            <IconButton>
+                                <NavigatioBack/>
+                            </IconButton>
+                        }
+                        title="Pedidos"
+                    />
                     
-                    {
-                        this.listaUsuarios.map((item,i) => {
-                           return  this._rederList(item,i);
-                        })
-                    }          
-                
-                </List>
+                    <List>
+                        <Subheader>Hangout Notifications</Subheader>
+                        
+                        {
+                            this.listaUsuarios.length ? 
+                            this.listaUsuarios.map((item,i) => {
+                                return  this._rederList(item,i);
+                            }) : <CircularProgress />
+                        }          
+                    
+                    </List>
+                </ReactCSSTransitionGroup>
             </div>
         )
     }
 }
 
 const mapStateToProps = state => { 
-    console.log("MapState",state.AppReducers.ativos);
     return (
         {
             email: state.AppReducers.email,

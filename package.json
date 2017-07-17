@@ -1,5 +1,5 @@
 {
-  "name": "react_redux",
+  "name": "react_router_redux",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,6 +7,7 @@
     "lodash": "^4.17.4",
     "material-ui": "^0.18.6",
     "react": "^15.6.1",
+    "react-addons-css-transition-group": "^15.6.0",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",

@@ -10,24 +10,32 @@ export const doEmail = input => {
 export const userFetch = () =>{
 
     return (dispatch) => {
+
         axios.get('http://localhost/users.php')
         .then(function(response){
-            const ativos = [];            
-            response.data.map((item,i)=>{
-                ativos[i] = item.check;
-            });
 
-            const collections = {
-                usuarios : response.data,
-                ativos:ativos
-            }
+            setTimeout(
+                ()=>{
+                    const ativos = [];            
+                    response.data.map((item,i)=>{
+                        ativos[i] = item.check;
+                        return ativos;
+                    });
 
-            dispatch (
-                {
-                    type: "LISTA_USER", 
-                    payload: collections
-                }
+                    const collections = {
+                        usuarios : response.data,
+                        ativos:ativos
+                    }
+
+                    dispatch (
+                        {
+                            type: "LISTA_USER", 
+                            payload: collections
+                        }
+                    )
+                },10
             )
+            
         }); 
     }
 }
@@ -35,7 +43,8 @@ export const userFetch = () =>{
 export const itemSelected = (data,i) => {
     const changedList = [].concat(data);
     const check = changedList[i];
-    changedList[i] = !check;    
+    changedList[i] = !check;   
+    console.log("Selecionado item ",i); 
     return {
         type: "itemSelecionado",
         payload: changedList

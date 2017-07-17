@@ -25,6 +25,19 @@
   text-decoration: none;
 }
 
+/**** Trasiçao fadeIn ****/
+
+.fadeIn-appear {
+  opacity: 0.01;
+}
+
+.fadeIn-appear.fadeIn-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+/*** end fadeIn ***/
+
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
