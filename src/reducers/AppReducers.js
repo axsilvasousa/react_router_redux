@@ -1,15 +1,20 @@
 import {
     USER_UP,
     SENHA_UP,
+    PEDIDOS_ADD,
     PEDIDOS_LISTAR,
-    PEDIDOS_ITEM_SELECIONADO
+    PEDIDOS_ITEM_SELECIONADO,
+    QUANTIDADE_UP,
+    SEARCH_TEXT_UP
 } from '../Constants';
 
 const INITIAL_STATE = {
     usuario: '',
     senha:'',
-    pedidos: '',
-    ativos : '',   
+    pedidos: [],
+    quantidade : 1,
+    ativos : '',
+    searchText : '',
 };
 
 
@@ -20,12 +25,18 @@ export default (state = INITIAL_STATE, action) => {
 
         case SENHA_UP:
             return { ...state, senha: action.payload }
+        
+        case QUANTIDADE_UP:
+            return { ...state, quantidade: action.payload }
+        
+        case SEARCH_TEXT_UP:
+            return { ...state, searchText: action.payload }
 
         case PEDIDOS_LISTAR:
+            console.log(action.payload);
             return{
                 ...state, 
-                pedidos : action.payload.pedidos,
-                ativos : action.payload.ativos,
+                pedidos : action.payload,
             }
         
         case PEDIDOS_ITEM_SELECIONADO:        

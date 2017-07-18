@@ -2,9 +2,14 @@ import axios from 'axios';
 import {
     USER_UP,
     SENHA_UP,
+    PEDIDOS_ADD,
     PEDIDOS_LISTAR,
     PEDIDOS_ITEM_SELECIONADO,
-    URL_LOGIN
+    URL_LOGIN,
+    URL_PEDIDOS,
+    QUANTIDADE_UP,
+    SEARCH_TEXT_UP
+    
 } from '../Constants';
 
 
@@ -22,6 +27,19 @@ export const doSenha = input => {
     }
 }
 
+export const doQuantidade = value => {
+    return {
+        type: QUANTIDADE_UP,
+        payload: value
+    }
+}
+
+export const doSearchText = text => {
+    return {
+        type: SEARCH_TEXT_UP,
+        payload: text
+    }
+}
 export const doLogar = (usuario,senha) =>{
     return (dispatch) => {
         axios({
@@ -41,34 +59,27 @@ export const doLogar = (usuario,senha) =>{
         });
     }
 }
-export const userFetch = () =>{
-
+export const getProdutos = () =>{
     return (dispatch) => {
 
-        axios.get('http://localhost/casadoacai/api/pedidos')
+        axios.get(URL_PEDIDOS)
         .then(function(response){
-            const pedidos = response.data.pedidos; 
-            console.log("ACtions",pedidos);
-            
-            const ativos = [];            
-            pedidos.map((item,i)=>{
-                ativos[i] = item.check;
-                return ativos;
-            });
-
-            const collections = {
-                pedidos,
-                ativos
-            }
-
+            const pedidos = response.data; 
             dispatch (
                 {
                     type: PEDIDOS_LISTAR, 
-                    payload: collections
+                    payload: pedidos
                 }
             )
             
         }); 
+    }
+}
+
+export const addPedidos = (data) =>{
+    return {
+        type: PEDIDOS_ADD,
+        payload: data
     }
 }
 

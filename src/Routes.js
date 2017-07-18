@@ -7,7 +7,7 @@ import {
 
 import Home from './components/Home';
 import Login from './components/Login';
-import Produtos from './components/Produtos';
+import Pedidos from './components/Pedidos';
 
 const BasicExample = () => (
   <Router>
@@ -15,7 +15,7 @@ const BasicExample = () => (
       <Route exact path="/" component={Home}/>
       <Route path="/login" component={Login}/>
       <Route path="/about" component={About}/>
-      <Route path="/produtos" component={Produtos}/>
+      <Route path="/pedidos" component={Pedidos} />
     </div>
   </Router>
 )
