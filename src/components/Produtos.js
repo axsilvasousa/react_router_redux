@@ -11,7 +11,7 @@ import {
     CircularProgress
 } from 'material-ui';
 import NavigatioBack from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
-import { doEmail,userFetch,itemSelected } from '../actions/AppActions';
+import { userFetch,itemSelected } from '../actions/AppActions';
 import '../App.css';
 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; 
@@ -19,7 +19,7 @@ class Produtos extends Component{
 
     constructor(props){
         super(props);
-        this.listaUsuarios = []
+        this.listaPedidos = []
         this._itemSelected = this._itemSelected.bind(this);
     }
     componentWillMount() {
@@ -31,7 +31,7 @@ class Produtos extends Component{
     }
 
     componentWillReceiveProps(nextProps) {
-        this.listaUsuarios = nextProps.usuarios;   
+        this.listaPedidos = nextProps.pedidos;   
     }
 
     _rederList(item,i){
@@ -41,7 +41,7 @@ class Produtos extends Component{
                 leftCheckbox={
                     <Checkbox checked={this.props.ativos[i]} />
                 }
-                primaryText={item.name}
+                primaryText={item.title}
                 onTouchTap={() => this._itemSelected(i) }
             />  
         )
@@ -70,10 +70,12 @@ class Produtos extends Component{
                         <Subheader>Hangout Notifications</Subheader>
                         
                         {
-                            this.listaUsuarios.length ? 
-                            this.listaUsuarios.map((item,i) => {
+                            
+                            this.listaPedidos.length ? 
+                            this.listaPedidos.map((item,i) => {
                                 return  this._rederList(item,i);
                             }) : <CircularProgress />
+                            
                         }          
                     
                     </List>
@@ -84,13 +86,13 @@ class Produtos extends Component{
 }
 
 const mapStateToProps = state => { 
+    console.log("Reducers",state.AppReducers.pedidos);
     return (
         {
-            email: state.AppReducers.email,
-            usuarios: state.AppReducers.usuarios,
+            pedidos: state.AppReducers.pedidos,
             ativos : state.AppReducers.ativos
         }
     )
 }
 
-export default connect(mapStateToProps, { doEmail,userFetch,itemSelected })(Produtos);
+export default connect(mapStateToProps, { userFetch,itemSelected })(Produtos);

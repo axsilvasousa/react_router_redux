@@ -1,23 +1,34 @@
+import {
+    USER_UP,
+    SENHA_UP,
+    PEDIDOS_LISTAR,
+    PEDIDOS_ITEM_SELECIONADO
+} from '../Constants';
+
 const INITIAL_STATE = {
-    email: '',
-    usuarios: '',
-    ativos : '',
-   
+    usuario: '',
+    senha:'',
+    pedidos: '',
+    ativos : '',   
 };
+
 
 export default (state = INITIAL_STATE, action) => {
     switch(action.type){
-        case "upEmail":
-            return { ...state, email: action.payload }
+        case USER_UP:
+            return { ...state, usuario: action.payload }
 
-        case "LISTA_USER":
+        case SENHA_UP:
+            return { ...state, senha: action.payload }
+
+        case PEDIDOS_LISTAR:
             return{
                 ...state, 
-                usuarios : action.payload.usuarios,
+                pedidos : action.payload.pedidos,
                 ativos : action.payload.ativos,
             }
         
-        case "itemSelecionado":        
+        case PEDIDOS_ITEM_SELECIONADO:        
             return{
                 ...state, ativos:action.payload
             }
