@@ -12,7 +12,6 @@ import {
     
 } from '../Constants';
 
-
 export const doUsuario = input => {
     return {
         type: USER_UP,
@@ -40,6 +39,7 @@ export const doSearchText = text => {
         payload: text
     }
 }
+
 export const doLogar = (usuario,senha) =>{
     return (dispatch) => {
         axios({
