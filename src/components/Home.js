@@ -23,7 +23,7 @@ class Home extends Component{
             <div>
                <h2>Home</h2>
                <div style={styles.contentButtom}>
-                    <Link to="/produtos" >
+                    <Link to="/pedidos" >
                         <RaisedButton label="Pedidos" primary={true} style={styles.buttons} />
                     </Link>
                     <Link to="/lista" >

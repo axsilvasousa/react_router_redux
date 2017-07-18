@@ -9,14 +9,18 @@ import {
     AutoComplete,
     FlatButton,
     TextField,
-    Snackbar 
+    Snackbar,
+    RaisedButton,
+    Divider,
+    SelectField, 
+    MenuItem
 } from 'material-ui';
+
 import NavigatioBack from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 import { addPedidos,doSearchText, getProdutos,doQuantidade } from '../actions/AppActions';
 import '../App.css';
 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; 
-
 
 class Pedidos extends Component{
 
@@ -47,6 +51,9 @@ class Pedidos extends Component{
             return list;
         });
         this.lista = list;   
+        this.state = {
+            value: null,
+        };
          
     }  
 
@@ -60,11 +67,11 @@ class Pedidos extends Component{
 
     doSendPedidos(){
         if(this.sendPedidos.length ){
-             const n  = this.props.quantidade;
+            const n  = this.props.quantidade;
             this.sendPedidos[this.sendPedidos.length - 1].qnt = n;
             this.props.doQuantidade(1);
             this.props.doSearchText('');
-            
+            const Pedidos = this.sendPedidos;
             localStorage.setItem("pedidos", JSON.stringify(Pedidos));
         }else{
             this.setState({
@@ -90,37 +97,55 @@ class Pedidos extends Component{
             />  
         )
     }
-   
+    _handleSelect = (event, index, value) => this.setState({value});
+
     render(){
         return(
-            <div>    
+            <div style={{flex:1, display:'flex', flexDirection:'column'}}>   
+                <div style={{position:'fixed',zIndex:1000, right:10,bottom:10}}>
+                    <RaisedButton label="Enviar" primary={true} />
+                </div>
                 <Snackbar
                     open={this.state.open}
                     message={this.state.snackerMsg}
                     autoHideDuration={4000}
                     onRequestClose={this._handleRequestClose}
                 />
-
+                
                 <ReactCSSTransitionGroup
                     transitionName="fadeIn"
                     transitionAppear={true}
                     transitionAppearTimeout={500}
                     transitionEnter={false}
                     transitionLeave={false}>
-                   <AppBar
-                        onLeftIconButtonTouchTap = {() => this.props.history.goBack() }
-                        iconElementLeft={                        
-                            <IconButton>
-                                <NavigatioBack/>
-                            </IconButton>
-                        }
-                        title="Pedidos"
+                    
+                    <AppBar
+                                
+                            onLeftIconButtonTouchTap = {() => this.props.history.goBack() }
+                            iconElementLeft={                        
+                                <IconButton>
+                                    <NavigatioBack/>
+                                </IconButton>
+                            }
+                            title="Pedidos"
                     />
 
-                    <div style={{ flex:1,margin:20, }}>
+                    
+
+                    <div style={{padding:20,paddingTop:0}}>
+                        <SelectField
+                            floatingLabelText="Loja"
+                            value={this.state.value}
+                            onChange={this._handleSelect}
+                            fullWidth={true}
+                        >
+                            <MenuItem value={1} primaryText="Jockey" />
+                            <MenuItem value={2} primaryText="Shopping" />                        
+                        </SelectField>
+
                         <AutoComplete
-            
-                            hintText="Type 'r', case insensitive"
+                    
+                            hintText="Digite o nome do produto"
                             searchText={this.props.searchText}
                             onUpdateInput={this.handleUpdateInput}
                             onNewRequest={(e,i) => this.handleNewRequest(e,i)}
@@ -139,11 +164,30 @@ class Pedidos extends Component{
                         </div>
                     </div>
 
+                    <Divider style={{marginTop:10, marginBottom:10}}/>
 
-                    
+                    <List style={{position:'relative',zIndex:2}}>
+                        {
+                            this.sendPedidos.map((item,i) =>{
+                                if(item.qnt){
+                                    return this._rederList(item,i);
+                                }
+                            
+                            })
+                        }
+                    </List>
+                       
                 </ReactCSSTransitionGroup>
             </div>
         )
+    }
+}
+
+const Styles = {
+    floating : {
+        position:"absolute",
+        buttom:10,
+        right:10,
     }
 }
 
