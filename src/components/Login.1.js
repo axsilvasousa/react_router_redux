@@ -12,10 +12,6 @@ import {
   Redirect
 } from 'react-router-dom'
 
-import {
-  BASE
-} from '../Constants';
-
 const logo = require('../img/logo.png');
 
 class Login extends Component{
@@ -34,16 +30,19 @@ class Login extends Component{
         if(this.props.login){
             return(
                  <Redirect to={{
-                    pathname: BASE+'/home',
+                    pathname: '/home',
                 }}/>
             )
         }
 
         return(
-            <div>
-                <img alt="Casa Açaí" src={logo} style={styles.logo} />
-                
-                <div style={styles.formLogin} >
+
+            
+            <div style={styles.main}>
+                <div style={styles.contentLogo}> 
+                    <img src={logo} style={styles.logo} />
+                </div>
+                <div styles={styles.formLogin} >
                     <TextField
                         value={this.props.usuario}
                         hintText="Digite seu usuário"
@@ -64,7 +63,7 @@ class Login extends Component{
                     />
 
 
-                    <RaisedButton style={{display:'table',marginRight:'auto',marginTop:30, marginLeft:'auto'}} onClick={()=>this._login()} label="Entrar" primary={true}  />
+                    <RaisedButton onClick={()=>this._login()}label="Entrar" primary={true}  />
                     <Snackbar
                         open={this.props.login_error}
                         message={this.props.login_msg}
@@ -77,22 +76,6 @@ class Login extends Component{
     }
 }
 
-const styles = {
-    logo:{
-        marginTop:50,
-        marginBottom:30,
-        width:100,
-        heigth:150,
-        marginLeft:'auto',
-        marginRight:'auto',
-        display:'table',
-    },
-    formLogin:{
-        display:'table',
-        padding:20,
-    }
-
-}
 const mapStateToProps = state => { 
     return (
         {

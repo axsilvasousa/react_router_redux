@@ -1,28 +1,45 @@
-import React from 'react'
+import React,{Component} from 'react'
 import {
   BrowserRouter as Router,
   Route,
-  Link
 } from 'react-router-dom'
 
+import {
+  CheckToken
+} from './utils/Repository';
+import {
+  BASE
+} from './Constants';
 import Home from './components/Home';
 import Login from './components/Login';
 import Pedidos from './components/Pedidos';
+import Lista from './components/Lista';
 
-const BasicExample = () => (
-  <Router>
-    <div>
-      <Route exact path="/" component={Home}/>
-      <Route path="/login" component={Login}/>
-      <Route path="/about" component={About}/>
-      <Route path="/pedidos" component={Pedidos} />
-    </div>
-  </Router>
+class  Rotas extends Component {
+  
+  render(){
+    return (
+      <Router>
+        <div>
+          <Route exact path={BASE+"/"} component={Login}/>
+          <PrivateRoute exact path={BASE+"/home"} component={Home} />          
+          <PrivateRoute exact path={BASE+"/pedidos"} component={Pedidos} />
+          <PrivateRoute path={BASE+"/pedidos/:loja"} component={Pedidos} />
+          <PrivateRoute exact path={BASE+"/lista"} component={Lista} />
+          <PrivateRoute path={BASE+"/lista/:lista"} component={Lista} />
+        </div>
+      </Router>
+    )
+  }  
+}
+
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={props => (
+      CheckToken() ? (
+          <Component {...props} />
+      ) : <div>no logado</div>
+  )}/>
 )
 
-const About = () => (
-  <div>
-    <h2>About</h2>
-  </div>
-)
-export default BasicExample
+export default Rotas;

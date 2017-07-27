@@ -25,6 +25,10 @@
   text-decoration: none;
 }
 
+.noLink{
+  text-decoration:none;
+  color:#000;
+}
 /**** Trasiçao fadeIn ****/
 
 .fadeIn-appear {
@@ -37,6 +41,12 @@
 }
 /*** end fadeIn ***/
 
+.btnFloat{
+  position: fixed;
+  bottom:20px;
+  right:20px;
+  z-index: 1000
+}
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
